@@ -30,11 +30,17 @@ How synchronize data between these two systems?
 
 Ideas
 - Using Hibernate listener with Envers
+
 -- Pros: 
+
 --- easy to implement in Java
+
 -- Cons: 
+
 --- changes directly in the database won't be detected, for instance, migration scripts.
+
 --- only works between Java projects using Hibernate
+
 
 ## Solution 1
 
