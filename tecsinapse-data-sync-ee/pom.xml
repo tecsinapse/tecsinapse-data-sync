@@ -10,6 +10,10 @@
     <dependencies>
         <dependency>
             <groupId>br.com.tecsinapse</groupId>
+            <artifactId>tecsinapse-data-sync</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>br.com.tecsinapse</groupId>
             <artifactId>tecsinapse-jpa</artifactId>
         </dependency>
         <dependency>
@@ -35,6 +39,11 @@
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
