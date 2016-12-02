@@ -1,5 +1,6 @@
 package br.com.tecsinapse.datasync.util;
 
+import br.com.tecsinapse.datasync.DataSyncProp;
 import br.com.tecsinapse.datasync.exception.DataSyncStartupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public final class ConnectionFactory {
 
     public static Connection getConnection() {
         try {
-            DataSource ds = (DataSource) new InitialContext().lookup("java:jboss/datasources/HelpdeskDS");// TODO: Properties DS name.
+            DataSource ds = (DataSource) new InitialContext().lookup(DataSyncProp.INSTANCE.datasource());
             return ds.getConnection().getMetaData().getConnection();
         } catch (NamingException | SQLException e) {
             LOG.error("Error trying create a connection with database. ", e);
