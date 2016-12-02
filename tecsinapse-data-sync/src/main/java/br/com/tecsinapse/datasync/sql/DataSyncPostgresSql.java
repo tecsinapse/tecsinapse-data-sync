@@ -73,7 +73,8 @@ public class DataSyncPostgresSql implements DataSyncSql {
 
 //                     validateChangedFields(fields) +
 
-                "    INSERT INTO data_sync(TABLE_NAME, action, object_id, changed_fields) values (TG_TABLE_NAME, TG_OP, NEW.ID, fields);" +
+//                "    INSERT INTO data_sync(TABLE_NAME, action, object_id, changed_fields) values (TG_TABLE_NAME, TG_OP, NEW.ID, fields);" +
+                "    INSERT INTO data_sync(action, object_id, changed_fields) values (TG_TABLE_NAME, TG_OP, NEW.ID);" +
                 "    RETURN NEW;" +
                 " END;" +
                 "$fila_data_sync$ language plpgsql;";
