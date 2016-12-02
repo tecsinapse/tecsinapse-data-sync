@@ -64,18 +64,33 @@ public class DataSyncPostgresSql implements DataSyncSql {
     }
 
     private String getSqlFunctionToExecutoWhenUpdate(String tableName, Set<String> fields) {
-        return "" +
-                " CREATE OR REPLACE FUNCTION " + getFunctionName(tableName, DataSyncEvent.UPDATE) + "() RETURNS TRIGGER AS $queue_data_sync$" +
+
+        return "CREATE OR REPLACE FUNCTION " + getFunctionName(tableName, DataSyncEvent.UPDATE) + "() RETURNS TRIGGER AS $fila_data_sync$" +
                 " declare" +
-//                "-- changed_fields varchar(500);" +
+//                "    fields varchar(500);" +
                 " BEGIN" +
-//                "--      IF (NEW.nome <> OLD.nome) THEN" +
-//                "--      changed_fields := changed_fields + 'nome';" +
-//                "--      end if;" +
-                "        INSERT INTO data_sync(TABLE_NAME, action, object_id) values (TG_TABLE_NAME, TG_OP, NEW.ID);" +
-                "        RETURN NEW;" +
+//                "    fields := '';" +
+
+//                     validateChangedFields(fields) +
+
+//                "    INSERT INTO data_sync(TABLE_NAME, action, object_id, changed_fields) values (TG_TABLE_NAME, TG_OP, NEW.ID, fields);" +
+                "    INSERT INTO data_sync(action, object_id, changed_fields) values (TG_TABLE_NAME, TG_OP, NEW.ID);" +
+                "    RETURN NEW;" +
                 " END;" +
-                " $queue_data_sync$ language plpgsql;";
+                "$fila_data_sync$ language plpgsql;";
+    }
+
+    private String validateChangedFields(Set<String> fields) {
+        String result = "";
+
+        for (String fieldName : fields) {
+            result +=
+                    " IF (NEW." + fieldName + " <> OLD." + fieldName + ") THEN" +
+                    "    fields := fields || '" + fieldName + ",';" +
+                    " end if;";
+        }
+
+        return result;
     }
 
     private String getSqlFunctionToExecutoWhenDelete(String tableName) {
