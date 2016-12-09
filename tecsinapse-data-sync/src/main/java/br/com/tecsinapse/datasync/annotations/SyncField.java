@@ -14,4 +14,6 @@ public @interface SyncField {
      * @return
      */
     String name() default "";
+
+    String attribute() default "";
 }

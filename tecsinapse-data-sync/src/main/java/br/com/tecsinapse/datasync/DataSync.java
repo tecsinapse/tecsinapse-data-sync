@@ -33,7 +33,7 @@ public class DataSync {
 
     public static void loadEntitiesToSync(Connection connection) throws SQLException {
         Reflections reflections = new Reflections("br.com.tecsinapse");
-        Set<Class<?>> mappedClasses = reflections.getTypesAnnotatedWith(SyncTable.class);
+        Set<Class<?>> mappedClasses = reflections.getTypesAnnotatedWith(SyncTable.class, true);
 
         for (Class<?> clazz : mappedClasses) {
             final String tableName = getTableName(clazz);
@@ -59,7 +59,8 @@ public class DataSync {
                 .filter(field -> field.isAnnotationPresent(SyncField.class))
                 .map(field -> {
                     final SyncField syncField = field.getDeclaredAnnotation(SyncField.class);
-                    return Strings.isNullOrEmpty(syncField.name()) ? field.getName().toLowerCase() : syncField.name();
+                    final String fieldColumn = Strings.isNullOrEmpty(syncField.name()) ? field.getName().toLowerCase() : syncField.name();
+                    return fieldColumn + " as " + syncField.attribute();
                 })
                 .collect(Collectors.toSet());
     }
