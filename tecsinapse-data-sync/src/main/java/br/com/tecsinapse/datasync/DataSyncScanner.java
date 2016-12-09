@@ -2,15 +2,11 @@ package br.com.tecsinapse.datasync;
 
 import br.com.tecsinapse.datasync.model.DataSyncItem;
 import br.com.tecsinapse.datasync.sql.DataSyncSql;
-import br.com.tecsinapse.datasync.util.ConnectionFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.Schedule;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.List;
@@ -20,16 +16,11 @@ import java.util.Set;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-@Startup
-@Singleton
 public class DataSyncScanner {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataSyncScanner.class);
 
-    @Schedule(hour = "*", minute = "*/1")
-    public void scan() throws SQLException {
-        final Connection connection = ConnectionFactory.getConnection();
-
+    public void run(Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(DataSyncSql.SQL_SCANNER)) {
             ResultSet rs = ps.executeQuery();
 
