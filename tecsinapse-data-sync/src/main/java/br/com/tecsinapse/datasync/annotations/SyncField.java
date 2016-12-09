@@ -13,7 +13,7 @@ public @interface SyncField {
      * Field name on database.
      * @return
      */
-    String name() default "";
+    String name();
 
-    String attribute() default "";
+    String attribute();
 }
