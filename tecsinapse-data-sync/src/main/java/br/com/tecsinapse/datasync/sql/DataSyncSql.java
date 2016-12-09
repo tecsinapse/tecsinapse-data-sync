@@ -6,6 +6,8 @@ import java.util.Set;
 
 public interface DataSyncSql {
 
+    String SQL_SCANNER = "select id, table_name, action, object_id from data_sync";
+
     String getSqlToCreateDataSyncTable();
 
     String getSqlToCreateDataSyncSequenceIfNotExists();
