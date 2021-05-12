@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring-security.version>4.1.0.RELEASE</spring-security.version>
+        <spring-security.version>5.2.10.RELEASE</spring-security.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
